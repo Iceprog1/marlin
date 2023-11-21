@@ -1,3 +1,7 @@
+<?php
+session_start();
+session_destroy();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,10 +39,12 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <div class="alert alert-info">Ваше сообщение выводится тут</div>
-                                    <form action="">
+                                    <?php if (isset($_SESSION['yes'])):?>
+                                        <div class="alert alert-info">Ваше сообщение выводится тут</div>
+                                    <?php endif; ?>
+                                    <form action="task113.php" method="POST">
                                         <label class="form-label" for="simpleinput">Text</label>
-                                        <input type="text" id="simpleinput" class="form-control">
+                                        <input type="text" id="simpleinput" class="form-control" name="text">
                                         <button class="btn btn-success mt-3">Submit</button>
                                     </form>
                                 </div>

@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+    // Подключение к базе данных
+    $pdo = new PDO('mysql:host=localhost;dbname=database;', 'root', '');
+    // Подготовка запроса к базе данных (в нашем примере взять все столбцы из таблицы users)
+    $statement = $pdo->prepare('SELECT * FROM users');
+    // Отправка запроса
+    $statement->execute();
+    // Вытаскивание данных и присваивание их переменной $users
+    $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+?>
 <html lang="en">
 <head>
         <meta charset="utf-8">
@@ -47,50 +57,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>
-                                                <a href="show.php?id=" class="btn btn-info">Редактировать</a>
-                                                <a href="edit.php?id=" class="btn btn-warning">Изменить</a>
-                                                <a href="delete.php?id=" class="btn btn-danger">Удалить</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                            <td>
-                                                <a href="show.php?id=" class="btn btn-info">Редактировать</a>
-                                                <a href="edit.php?id=" class="btn btn-warning">Изменить</a>
-                                                <a href="delete.php?id=" class="btn btn-danger">Удалить</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                            <td>
-                                                <a href="show.php?id=" class="btn btn-info">Редактировать</a>
-                                                <a href="edit.php?id=" class="btn btn-warning">Изменить</a>
-                                                <a href="delete.php?id=" class="btn btn-danger">Удалить</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td>Larry the Bird</td>
-                                            <td> Bird</td>
-                                            <td>@twitter</td>
-                                            <td>
-                                                <a href="show.php?id=" class="btn btn-info">Редактировать</a>
-                                                <a href="edit.php?id=" class="btn btn-warning">Изменить</a>
-                                                <a href="delete.php?id=" class="btn btn-danger">Удалить</a>
-                                            </td>
-                                        </tr>
+                                        <?php foreach ($users as $user): ?>
+                                            <tr>
+                                                <th scope="row"><?php echo $user['id']?></th>
+                                                <td><?php echo $user['FirstName']?></td>
+                                                <td><?php echo $user['LastName']?></td>
+                                                <td>@<?php echo $user['UserName']?></td>
+                                                <td>
+                                                    <a href="show.php?id=" class="btn btn-info">Редактировать</a>
+                                                    <a href="edit.php?id=" class="btn btn-warning">Изменить</a>
+                                                    <a href="delete.php?id=" class="btn btn-danger">Удалить</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>

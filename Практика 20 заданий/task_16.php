@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,19 +37,16 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <div class="alert alert-danger fade show" role="alert">
-                                        Неверный логин или пароль
-                                    </div>
-                                    <form action="">
-                                        <div class="form-group">
-                                        	<label class="form-label" for="simpleinput">Email</label>
-                                        <input type="text" id="simpleinput" class="form-control">
+                                    <?php if (isset($_SESSION['success'])):?>
+                                        <div class="alert alert-success fade show" role="alert">
+                                            Здравствуйте, <?php echo $_SESSION['success']?>.
                                         </div>
-
-                                        <label class="form-label" for="simpleinput">Password</label>
-                                        <input type="password" id="simpleinput" class="form-control">
-                                        <button class="btn btn-success mt-3">Submit</button>
-                                    </form>
+                                        <?php else: ?>
+                                            <div class="alert alert-success fade show" role="alert">
+                                                Здравствуйте, пользователь.
+                                            </div>
+                                    <?php endif; ?>
+                                    <a href="task116.php" class="btn btn-info">Выйти</a>
                                 </div>
                             </div>
                         </div>

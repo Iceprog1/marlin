@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,10 +37,18 @@
                         <div class="panel-content">
                             <div class="panel-content">
                                 <div class="form-group">
-                                    <div class="alert alert-success fade show" role="alert">
-                                        Здравствуйте, ИМЯ_ПОЛЬЗОВАТЕЛЯ.
-                                    </div>
-                                    <a href="#" class="btn btn-info">Выйти</a>
+                                    <?php if (isset($_SESSION['count'])):?>
+                                        <div class="alert alert-info fade show" role="alert">
+                                            Кнопка была нажата: <b><?php echo $_SESSION['count'];?></b> раз
+                                        </div>
+                                        <?php else: ?>
+                                            <div class="alert alert-info fade show" role="alert">
+                                                Кнопка была нажата: <b>0</b> раз
+                                            </div>
+                                    <?php endif; ?>
+                                    <form action="task114.php" method="post">
+                                        <button class="btn btn-success mt-3" name="submit">Submit</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
