@@ -1,3 +1,11 @@
+<?php
+$pdo = new PDO('mysql:host=localhost;dbname=database', 'root', '');
+$sql = 'SELECT * FROM images';
+$state = $pdo->prepare($sql);
+$state->execute();
+$images = $state->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +45,10 @@
                             <div class="panel-content">
                                 <div class="panel-content">
                                     <div class="form-group">
-                                        <form action="task117.php" enctype="multipart/form-data" method="post">
+                                        <form action="task117.php" method="POST" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label class="form-label" for="simpleinput">Image</label>
-                                            <input type="file" id="simpleinput" class="form-control">
+                                            <input type="file" id="simpleinput" class="form-control" name="images[]" size="10000000" multiple>
                                             </div>
                                             <button class="btn btn-success mt-3">Submit</button>
                                         </form>
@@ -66,17 +74,12 @@
                             <div class="panel-content">
                                 <div class="panel-content image-gallery">
                                     <div class="row">
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/1.jpg">
-                                        </div>
-
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/2.jpg">
-                                        </div>
-
-                                        <div class="col-md-3 image">
-                                            <img src="img/demo/gallery/3.jpg">
-                                        </div>
+                                        <?php foreach ($images as $image):?>
+                                            <div class="col-md-3 image">
+                                                <img src="upload/<?php echo $image['img']?>">
+                                                <a class="btn btn-danger" href="task118.php/?id=<?php echo $image['id']?>" onclick="confirm('Вы уверены?');">Удалить</a>
+                                            </div>
+                                        <?php endforeach;?>
                                     </div>
                                 </div>
                             </div>
