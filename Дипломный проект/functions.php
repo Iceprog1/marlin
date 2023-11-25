@@ -32,3 +32,7 @@ function display_flash_message($name){
         unset($_SESSION[$name]);
     }
 }
+
+function user_in_session($name, $user){
+    $_SESSION[$name] = $user;
+}

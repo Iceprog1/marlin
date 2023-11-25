@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +39,7 @@
             <div class="alert alert-success">
                 Профиль успешно обновлен.
             </div>
+            <?php echo $_SESSION['user'];?>
             <div class="subheader">
                 <h1 class="subheader-title">
                     <i class='subheader-icon fal fa-users'></i> Список пользователей
