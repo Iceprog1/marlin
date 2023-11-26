@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "functions.php";
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +40,7 @@ require "functions.php";
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
             <?php display_flash_message('success'); ?>
             <?php display_flash_message('danger'); ?>
-            <form action="login.php">
+            <form action="login.php" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
                     <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="" name="email">

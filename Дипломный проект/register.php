@@ -11,7 +11,6 @@ $user = get_user_by_email($email);
 if (!empty($user)){
     set_flash_message('danger', 'Уведомление! Этот эл. адрес уже занят другим пользователем.' );
     redirect_to('./page_register.php');
-    exit();
 }
 
 add_user($email, $password);
