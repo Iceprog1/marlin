@@ -27,15 +27,9 @@ if (empty($user) || !password_verify($password, $user['password'])){
     redirect_to('./page_login.php');
 }
 
-if ($user['role'] == 'manager') {
-    $_SESSION['manager'] = $user;
-}
 
 if (!empty($user)){
     $_SESSION['user'] = $user;
 }
 
-if ($user['role'] == 'admin') {
-    $_SESSION['role'] = $user;
-}
 redirect_to('./users.php');

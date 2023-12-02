@@ -3,12 +3,7 @@ session_start();
 require "functions.php";
 
 logged_in('user');
-
-$pdo = new PDO('mysql:host=localhost;dbname=database', 'root', '');
-$sql = 'SELECT * FROM d_users';
-$state = $pdo->prepare($sql);
-$state->execute();
-$users = $state->fetchAll(PDO::FETCH_ASSOC);
+$users = get_users();
 
 ?>
 <!DOCTYPE html>
@@ -56,9 +51,7 @@ $users = $state->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="row">
                 <div class="col-xl-12">
-                    <?php if (isset($_SESSION['manager'])):?>
-                    <?php endif;?>
-                    <?php if (isset($_SESSION['role'])):?>
+                    <?php if ($_SESSION['user']['role'] === '1'):?>
                         <a class="btn btn-success" href="create_user.php">Добавить</a>
                     <?php endif;?>
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
@@ -83,43 +76,41 @@ $users = $state->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="status status-<?php echo $user['status'] ?> mr-3">
                                     <span class="rounded-circle profile-image d-block " style="background-image:url('<?php echo $user['img'] ?>'); background-size: cover;"></span>
                                 </span>
-                                <?php if (isset($_SESSION['manager'])):?>
                                     <div class="info-card-text flex-1">
                                         <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
                                             <?php echo $user['name'] ?>
+                                            <?php if ($_SESSION['user']['role'] === '1' ||
+                                            $_SESSION['user']['id'] === $user['id']
+                                            ):?>
+                                                <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
+                                                <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
+                                            <?php endif;?>
                                         </a>
+                                        <?php if ($_SESSION['user']['role'] === '1' ||
+                                        $_SESSION['user']['id'] === $user['id']
+                                        ):?>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="edit.html">
+                                                    <i class="fa fa-edit"></i>
+                                                    Редактировать</a>
+                                                <a class="dropdown-item" href="security.html">
+                                                    <i class="fa fa-lock"></i>
+                                                    Безопасность</a>
+                                                <a class="dropdown-item" href="status.html">
+                                                    <i class="fa fa-sun"></i>
+                                                    Установить статус</a>
+                                                <a class="dropdown-item" href="media.html">
+                                                    <i class="fa fa-camera"></i>
+                                                    Загрузить аватар
+                                                </a>
+                                                <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                                    <i class="fa fa-window-close"></i>
+                                                    Удалить
+                                                </a>
+                                            </div>
+                                        <?php endif;?>
                                         <span class="text-truncate text-truncate-xl"><?php echo $user['job'] ?></span>
                                     </div>
-                                <?php endif;?>
-                                <?php if (isset($_SESSION['role'])):?>
-                                    <div class="info-card-text flex-1">
-                                        <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
-                                            <?php echo $user['name'] ?>
-                                            <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
-                                            <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="edit.html">
-                                                <i class="fa fa-edit"></i>
-                                                Редактировать</a>
-                                            <a class="dropdown-item" href="security.html">
-                                                <i class="fa fa-lock"></i>
-                                                Безопасность</a>
-                                            <a class="dropdown-item" href="status.html">
-                                                <i class="fa fa-sun"></i>
-                                                Установить статус</a>
-                                            <a class="dropdown-item" href="media.html">
-                                                <i class="fa fa-camera"></i>
-                                                Загрузить аватар
-                                            </a>
-                                            <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
-                                                <i class="fa fa-window-close"></i>
-                                                Удалить
-                                            </a>
-                                        </div>
-                                        <span class="text-truncate text-truncate-xl"><?php echo $user['job'] ?></span>
-                                    </div>
-                                <?php endif;?>
                                 <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse" data-target="#c_1 > .card-body + .card-body" aria-expanded="false">
                                     <span class="collapsed-hidden">+</span>
                                     <span class="collapsed-reveal">-</span>

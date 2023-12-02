@@ -6,7 +6,7 @@ use JetBrains\PhpStorm\NoReturn;
 function get_user_by_email($email)
 {
     $pdo = new PDO('mysql:host=localhost;dbname=database', 'root', '');
-    $sql = 'SELECT * FROM diplom WHERE email=:email';
+    $sql = 'SELECT * FROM users WHERE email=:email';
     $state = $pdo->prepare($sql);
     $state->execute(['email' => $email]);
     $user = $state->fetch(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ function redirect_to(string $path): void
 function add_user(string $email, string $password): void
 {
     $pdo = new PDO('mysql:host=localhost;dbname=database', 'root', '');
-    $sql = 'INSERT INTO diplom (email, password) VALUES (:email, :password)';
+    $sql = 'INSERT INTO users (email, password) VALUES (:email, :password)';
     $state = $pdo->prepare($sql);
     $state->execute(['email' => $email, 'password' => password_hash($password, PASSWORD_DEFAULT)]);
 }
@@ -42,8 +42,6 @@ function display_flash_message( string $name): void
 }
 
 
-
-
 // users
 
 function logged_in(string $name): void
@@ -51,6 +49,13 @@ function logged_in(string $name): void
     if (!isset($_SESSION[$name])){
         redirect_to('./page_login.php');
     }
+}
+
+function get_users(): array
+{
+    $pdo = new PDO('mysql:host=localhost;dbname=database', 'root', '');
+    $state = $pdo->query('SELECT * FROM users');
+    return $state->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
