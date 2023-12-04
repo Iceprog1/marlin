@@ -58,4 +58,16 @@ function get_users(): array
     return $state->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function admin($name, $info): string
+{
+    if ($_SESSION[$name][$info] === '1'){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
+function personal($name, $info){
+    return $_SESSION[$name][$info];
+}

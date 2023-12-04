@@ -51,7 +51,7 @@ $users = get_users();
             </div>
             <div class="row">
                 <div class="col-xl-12">
-                    <?php if ($_SESSION['user']['role'] === '1'):?>
+                    <?php if (admin('user', 'role')):?>
                         <a class="btn btn-success" href="create_user.php">Добавить</a>
                     <?php endif;?>
                     <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
@@ -79,15 +79,15 @@ $users = get_users();
                                     <div class="info-card-text flex-1">
                                         <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
                                             <?php echo $user['name'] ?>
-                                            <?php if ($_SESSION['user']['role'] === '1' ||
-                                            $_SESSION['user']['id'] === $user['id']
+                                            <?php if (admin('user', 'role') ||
+                                                personal('user', 'id') === $user['id']
                                             ):?>
                                                 <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                             <?php endif;?>
                                         </a>
-                                        <?php if ($_SESSION['user']['role'] === '1' ||
-                                        $_SESSION['user']['id'] === $user['id']
+                                        <?php if (admin('user', 'role') ||
+                                            personal('user', 'id') === $user['id']
                                         ):?>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="edit.html">
