@@ -1,68 +1,72 @@
 <?php
 
-//Это создание класса, оно начинается со слова class
-class Person {
-    // У класса бывают свойства, они создаются так
-    // Свойства это информация, методы это действия
-    public $name;
-    public $age;
+// 1 Классы и объекты
 
-    // Значение константы пока не меняется
-    const ID = 10;
-
-
-    // Чтобы создать методы мы пишем
-    // В скобках наш метод принимает параметр из вызова методов ниже в которые мы передали значение параметров
-    // Чтобы что-то вернуть отсюда мы пишем return
-    public function sayHello(){
-        return 'Hi, i am' . $this->name . '' . $this->setName('derk');
-    }
-
-    // То имя которое внизу мы передали как параметр, здесь мы присваиваем свойству текущего нижнего объекта
-    public function setName($name){
-        $this->name = $name;
-    }
-
-    public function setAge($age){
-        $this->age = $age;
-    }
-
-    // Если у нашей функции мы ставим солов static, что внизу можем вызывать этот метод, просто указав имя класса
-    public static function saySomthing(){
-        echo 'bla-bla';
-        // в статичной функции нельзя использовать $this
-    }
-}
-
-
-
-// При помощи такого класса, мы можем создать объект
-// Чтобы создать объект мы пишем
-$myPerson = new Person();
-
-Person::saySomthing();
-// Чтобы вызвать метод из объекта $myPerson дописываем вот это
+// Класс
+//class Person {
+//    // Свойста
+//    public $name;
+//    public $age;
+//
+//    // Методы
+//    public function sayHello() {
+//        echo 'Hello';
+//    }
+//}
+//
+//$myPerson = new Person;
+//
 //$myPerson->sayHello();
 
-// Также можно обращаться к методам объекта вот так
-//$myPerson->name = 'Adam';
+// 2 Работа с методами
 
-// После создания такого объекта
-// Этот объект уже считается отдельным объектом
-// Мы можем передавать разные параметры в метод из объекта при этом вызывая один и тот же объект
-$myPerson2 = new Person();
+// Класс
+//class Person {
+//    // Свойста
+//    public $name;
+//    public $age;
+//
+//    // Методы
+//    public function sayHello($name) {
+//        echo $name;
+//    }
+//
+//    public function setName($name){
+//       $this->name = $name;
+//    }
+//}
+//
+//$myPerson = new Person;
+//$myPerson2 = new Person;
+//
+//$myPerson->setName('Adam');
+//$myPerson2->setName('Idris');
 
-//$myPerson->sayHello(' Adam');
-//echo '<pre>';
-//$myPerson2->sayHello(' Derk');
+//$this, несколько объектов из класса
 
-//$myPerson2->setName('Alisa');
-//$myPerson2->setAge('11');
+// Класс
+//class Person {
+//    // Свойста
+//    public $name;
+//    public $age;
 
-$myPerson2->sayHello();
+//    // Методы
+//    public function sayHello($name) {
+//        echo $name;
+//    }
 
-echo $myPerson2->name;
-echo $myPerson2->age;
+//    public function setName($name){
+//        echo $this->name = $name;
+//    }
 
+//    public function setAge($age){
+//        echo $this->age = $age;
+//    }
+//}
 
-echo $myPerson2::ID;
+//$myPerson = new Person;
+//$myPerson2 = new Person;
+
+//$myPerson->setName('Adam');
+//$myPerson->setAge(13);
+//$myPerson2->setName('Idris');
