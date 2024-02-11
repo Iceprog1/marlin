@@ -1,3 +1,20 @@
+<?php
+require "./ruling/functions.php";
+session_start();
+if (is_not_logged_in('user')) {
+    redirect_to('Location: ./page_login.php');
+}
+
+if (is_not_admin()) {
+    if (!is_author('user', 'id')) {
+        redirect_to('Location: ./users.php');
+    }
+}
+
+$id = get_user_by_id($_GET['id']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,13 +49,14 @@
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php display_flash_message('success'); ?>
         <div class="subheader">
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-lock'></i> Безопасность
             </h1>
 
         </div>
-        <form action="">
+        <form action="./ruling/security.php" method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -50,21 +68,21 @@
                                 <!-- email -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Email</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="john@example.com">
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $id['email']?>" name="email">
                                 </div>
 
                                 <!-- password -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Пароль</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input type="password" id="simpleinput" class="form-control" name="password">
                                 </div>
 
                                 <!-- password confirmation-->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Подтверждение пароля</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input type="password" id="simpleinput" class="form-control" name="password">
                                 </div>
-
+                                <input type="hidden" value="<?php echo $id['id']?>" name="id">
 
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                     <button class="btn btn-warning">Изменить</button>

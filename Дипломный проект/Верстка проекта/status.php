@@ -1,3 +1,21 @@
+<?php
+require "./ruling/functions.php";
+session_start();
+if (is_not_logged_in('user')) {
+    redirect_to('Location: ./page_login.php');
+}
+
+if (is_not_admin()) {
+    if (!is_author('user', 'id')) {
+        redirect_to('Location: ./users.php');
+    }
+}
+
+$id = get_user_by_id($_GET['id']);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,13 +50,14 @@
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php display_flash_message('success'); ?>
         <div class="subheader">
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-sun'></i> Установить статус
             </h1>
 
         </div>
-        <form action="">
+        <form action="./ruling/status.php" method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -52,11 +71,12 @@
                                         <!-- status -->
                                         <div class="form-group">
                                             <label class="form-label" for="example-select">Выберите статус</label>
-                                            <select class="form-control" id="example-select">
-                                                <option>Онлайн</option>
-                                                <option>Отошел</option>
-                                                <option>Не беспокоить</option>
+                                            <select class="form-control" id="example-select" name="status">
+                                                <option value="success">Онлайн</option>
+                                                <option value="warning">Отошел</option>
+                                                <option value="danger">Не беспокоить</option>
                                             </select>
+                                            <input type="hidden" name="id" value="<?php echo $id['id']?>">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">

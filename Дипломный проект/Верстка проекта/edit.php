@@ -1,3 +1,20 @@
+<?php
+require "./ruling/functions.php";
+session_start();
+if (is_not_logged_in('user')) {
+    redirect_to('Location: ./page_login.php');
+}
+
+if (is_not_admin()) {
+    if (!is_author('user', 'id')){
+        redirect_to('Location: ./users.php');
+    }
+}
+
+$id = get_user_by_id($_GET['id']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,33 +49,48 @@
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php display_flash_message('success');?>
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-image'></i> Загрузить аватар
+                <i class='subheader-icon fal fa-plus-circle'></i> Редактировать
             </h1>
 
         </div>
-        <form action="">
+        <form action="./ruling/edit.php" method="post">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
-                                <h2>Текущий аватар</h2>
+                                <h2>Общая информация</h2>
                             </div>
                             <div class="panel-content">
+                                <!-- username -->
                                 <div class="form-group">
-                                    <img src="img/demo/authors/josh.png" alt="" class="img-responsive" width="200">
+                                    <label class="form-label" for="simpleinput">Имя</label>
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $id['name']?>" name="username">
                                 </div>
 
+                                <!-- title -->
                                 <div class="form-group">
-                                    <label class="form-label" for="example-fileinput">Выберите аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <label class="form-label" for="simpleinput">Место работы</label>
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $id['job']?>" name="job">
                                 </div>
 
+                                <!-- tel -->
+                                <div class="form-group">
+                                    <label class="form-label" for="simpleinput">Номер телефона</label>
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $id['number']?>" name="number">
+                                </div>
 
+                                <!-- address -->
+                                <div class="form-group">
+                                    <label class="form-label" for="simpleinput">Адрес</label>
+                                    <input type="text" id="simpleinput" class="form-control" value="<?php echo $id['adress']?>" name="adress">
+                                </div>
+                                <input type="hidden" value="<?php echo $id['id']?>" name="id">
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Загрузить</button>
+                                    <button class="btn btn-warning">Редактировать</button>
                                 </div>
                             </div>
                         </div>

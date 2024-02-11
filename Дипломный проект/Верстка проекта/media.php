@@ -1,3 +1,20 @@
+<?php
+require "./ruling/functions.php";
+session_start();
+if (is_not_logged_in('user')) {
+    redirect_to('Location: ./page_login.php');
+}
+
+if (is_not_admin()) {
+    if (!is_author('user', 'id')) {
+        redirect_to('Location: ./users.php');
+    }
+}
+
+$id = get_user_by_id($_GET['id']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,46 +49,35 @@
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php display_flash_message('success'); ?>
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-plus-circle'></i> Редактировать
+                <i class='subheader-icon fal fa-image'></i> Загрузить аватар
             </h1>
 
         </div>
-        <form action="">
+        <form action="./ruling/media.php" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
-                                <h2>Общая информация</h2>
+                                <h2>Текущий аватар</h2>
                             </div>
                             <div class="panel-content">
-                                <!-- username -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Иван иванов">
+                                    <img src="img/demo/avatars/<?php echo $id['image']?>" alt="" class="img-responsive" width="200">
                                 </div>
 
-                                <!-- title -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Marlin Веб-разработчик">
+                                    <label class="form-label" for="example-fileinput">Выберите аватар</label>
+                                    <input type="file" id="example-fileinput" class="form-control-file" name="image">
+                                    <input type="hidden" name="id" value="<?php echo $id['id']?>">
                                 </div>
 
-                                <!-- tel -->
-                                <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="8 888 8888 88">
-                                </div>
 
-                                <!-- address -->
-                                <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Восточные Королевства, Штормград">
-                                </div>
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Редактировать</button>
+                                    <button class="btn btn-warning">Загрузить</button>
                                 </div>
                             </div>
                         </div>

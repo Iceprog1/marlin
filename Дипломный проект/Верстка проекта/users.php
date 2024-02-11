@@ -51,9 +51,7 @@ $users = get_users();
 </nav>
 
 <main id="js-page-content" role="main" class="page-content mt-3">
-    <div class="alert alert-success">
-        Профиль успешно обновлен.
-    </div>
+    <?php display_flash_message('success');?>
     <div class="subheader">
         <h1 class="subheader-title">
             <i class='subheader-icon fal fa-users'></i> Список пользователей
@@ -62,7 +60,7 @@ $users = get_users();
     <div class="row">
         <div class="col-xl-12">
             <?php if (is_admin()): ?>
-                <a class="btn btn-success" href="create_user.html">Добавить</a>
+                <a class="btn btn-success" href="create_user.php">Добавить</a>
             <?php endif; ?>
             <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">
                 <input type="text" id="js-filter-contacts" name="filter-contacts"
@@ -90,7 +88,7 @@ $users = get_users();
                                           style="background-image:url('img/demo/avatars/<?php echo $user['image']?>'); background-size: cover;"></span>
                                 </span>
                         <div class="info-card-text flex-1">
-                            <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info"
+                            <a href="<?php echo $user['id']?>" class="fs-xl text-truncate text-truncate-lg text-info"
                                data-toggle="dropdown" aria-expanded="false">
                                 <?php echo $user['name']?>
                                 <?php if (is_admin() || is_equal('user', $user)):?>
@@ -100,20 +98,20 @@ $users = get_users();
                             </a>
                             <?php if (is_admin() || is_equal('user', $user)): ?>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="edit.html">
+                                    <a class="dropdown-item" href="edit.php?id=<?php echo $user['id']?>">
                                         <i class="fa fa-edit"></i>
                                         Редактировать</a>
-                                    <a class="dropdown-item" href="security.html">
+                                    <a class="dropdown-item" href="security.php?id=<?php echo $user['id']?>">
                                         <i class="fa fa-lock"></i>
                                         Безопасность</a>
-                                    <a class="dropdown-item" href="status.html">
+                                    <a class="dropdown-item" href="status.php?id=<?php echo $user['id']?>">
                                         <i class="fa fa-sun"></i>
                                         Установить статус</a>
-                                    <a class="dropdown-item" href="media.html">
+                                    <a class="dropdown-item" href="media.php?id=<?php echo $user['id']?>">
                                         <i class="fa fa-camera"></i>
                                         Загрузить аватар
                                     </a>
-                                    <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                    <a href="./ruling/delete.php?id=<?php echo $user['id']?>" class="dropdown-item" onclick="return confirm('are you sure?');">
                                         <i class="fa fa-window-close"></i>
                                         Удалить
                                     </a>
@@ -138,13 +136,13 @@ $users = get_users();
                             <i class="fas fa-map-pin mr-2"></i> <?php echo $user['adress']?>
                         </address>
                         <div class="d-flex flex-row">
-                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#4680C2">
+                            <a href="<?php echo $user['vk']?>" class="mr-2 fs-xxl" style="color:#4680C2">
                                 <i class="fab fa-vk"></i>
                             </a>
-                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#38A1F3">
+                            <a href="<?php echo $user['telegram']?>" class="mr-2 fs-xxl" style="color:#38A1F3">
                                 <i class="fab fa-telegram"></i>
                             </a>
-                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#E1306C">
+                            <a href="<?php echo $user['insta']?>" class="mr-2 fs-xxl" style="color:#E1306C">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </div>
